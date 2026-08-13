@@ -1,80 +1,88 @@
-from servicios import Restaurante
-from modelos import Producto, Bebida, Cliente
-
-def mostrar_menu() -> None:
-    """Muestra el menú principal del sistema."""
-    print("\n" + "="*40)
-    print("        SISTEMA DE RESTAURANTE")
-    print("="*40)
-    print("1. Registrar producto")
-    print("2. Registrar bebida")
-    print("3. Registrar cliente")
-    print("-"*40)
-    print("4. Listar productos")
-    print("5. Listar clientes")
-    print("-"*40)
-    print("6. Salir")
-
-def registrar_producto_sistema(restaurante: Restaurante) -> None:
-    """Solicita datos y crea un objeto Producto."""
-    print("\n--- Registrar nuevo producto ---")
-    codigo = input("Ingrese código: ").strip()
-    nombre = input("Ingrese nombre: ").strip()
-    categoria = input("Ingrese categoría: ").strip()
-    try:
-        precio = float(input("Ingrese precio: ").strip())
-    except ValueError:
-        print("❌ Error: El precio debe ser un número")
-        return
-    producto_nuevo = Producto(codigo, nombre, categoria, precio)
-    restaurante.registrar_producto(producto_nuevo)
-
-def registrar_bebida_sistema(restaurante: Restaurante) -> None:
-    """Solicita datos y crea un objeto Bebida."""
-    print("\n--- Registrar nueva bebida ---")
-    codigo = input("Ingrese código: ").strip()
-    nombre = input("Ingrese nombre: ").strip()
-    categoria = input("Ingrese categoría: ").strip()
-    try:
-        precio = float(input("Ingrese precio: ").strip())
-    except ValueError:
-        print("❌ Error: El precio debe ser un número")
-        return
-    tamaño = input("Ingrese tamaño (ej: 500ml): ").strip()
-    tipo_envase = input("Ingrese tipo de envase: ").strip()
-    bebida_nueva = Bebida(codigo, nombre, categoria, precio, tamaño, tipo_envase)
-    restaurante.registrar_producto(bebida_nueva)
-
-def registrar_cliente_sistema(restaurante: Restaurante) -> None:
-    """Solicita datos y crea un objeto Cliente."""
-    print("\n--- Registrar nuevo cliente ---")
-    identificacion = input("Ingrese identificación: ").strip()
-    nombre = input("Ingrese nombre completo: ").strip()
-    correo = input("Ingrese correo electrónico: ").strip()
-    cliente_nuevo = Cliente(identificacion, nombre, correo)
-    restaurante.registrar_cliente(cliente_nuevo)
+from servicios.restaurante import Restaurante
+from modelos.producto import Producto
+from modelos.bebida import Bebida
+from modelos.cliente import Cliente
 
 def main():
-    """Función principal que ejecuta el sistema."""
-    sistema_restaurante = Restaurante()
+    app = Restaurante()
+
     while True:
-        mostrar_menu()
-        opcion = input("\nSeleccione una opción: ").strip()
-        if opcion == "1":
-            registrar_producto_sistema(sistema_restaurante)
-        elif opcion == "2":
-            registrar_bebida_sistema(sistema_restaurante)
-        elif opcion == "3":
-            registrar_cliente_sistema(sistema_restaurante)
-        elif opcion == "4":
-            sistema_restaurante.listar_productos()
-        elif opcion == "5":
-            sistema_restaurante.listar_clientes()
-        elif opcion == "6":
-            print("\n👋 Saliendo del sistema... ¡Hasta pronto!")
+        # Usa la TUPLA para mostrar opciones
+        opciones = app.obtener_opciones_menu()
+        print("\n" + "="*50)
+        print("          SISTEMA DE RESTAURANTE")
+        print("="*50)
+        for i, opcion in enumerate(opciones, 1):
+            print(f"{i}. {opcion}")
+        print("-"*50)
+
+        try:
+            seleccion = int(input("Seleccione una opción: "))
+        except ValueError:
+            print("⚠️ Ingrese un número válido.")
+            continue
+
+        if seleccion == 1:
+            # Registrar producto o bebida
+            codigo = input("Código: ").strip()
+            nombre = input("Nombre: ").strip()
+            categoria = input("Categoría: ").strip()
+            try:
+                precio = float(input("Precio: $"))
+            except ValueError:
+                print("⚠️ Precio inválido.")
+                continue
+
+            es_bebida = input("¿Es bebida? (s/n): ").strip().lower()
+            if es_bebida == "s":
+                tamano = input("Tamaño (ej: 500ml): ").strip()
+                tipo_envase = input("Tipo de envase: ").strip()
+                producto = Bebida(codigo, nombre, categoria, precio, tamano, tipo_envase)
+            else:
+                producto = Producto(codigo, nombre, categoria, precio)
+
+            app.registrar_producto(producto)
+
+        elif seleccion == 2:
+            # Buscar producto
+            codigo = input("Código del producto a buscar: ").strip()
+            prod = app.buscar_producto(codigo)
+            if prod:
+                print("\n" + prod.mostrar_informacion())
+            else:
+                print("❌ Producto no encontrado.")
+
+        elif seleccion == 3:
+            # Listar productos
+            app.listar_productos()
+
+        elif seleccion == 4:
+            # Registrar cliente
+            ide = input("Identificación: ").strip()
+            nombre = input("Nombre completo: ").strip()
+            correo = input("Correo electrónico: ").strip()
+            cliente = Cliente(ide, nombre, correo)
+            app.registrar_cliente(cliente)
+
+        elif seleccion == 5:
+            # Listar clientes
+            app.listar_clientes()
+
+        elif seleccion == 6:
+            # Mostrar categorías (CONJUNTO)
+            cats = app.mostrar_categorias()
+            if cats:
+                print("\n📂 Categorías únicas:")
+                print(", ".join(cats))
+            else:
+                print("No hay categorías registradas.")
+
+        elif seleccion == 7:
+            print("👋 Saliendo del sistema...")
             break
+
         else:
-            print("❌ Opción no válida, intente nuevamente")
+            print("⚠️ Opción no válida.")
 
 if __name__ == "__main__":
     main()
