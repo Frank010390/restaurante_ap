@@ -1,6 +1,30 @@
-# Restaurante App – Semana 9
+# 🍽️ Restaurante App — Semana 9
+*Estudiante:* Frank Marlon Carriel Santos
+*Asignatura:* Programación Orientada a Objetos
 
-## 📋 Funcionalidades
+## 📋 Descripción del Proyecto
+Sistema de gestión para restaurante que permite administrar *productos* y *usuarios*, aplicando estructuras de datos en Python y arquitectura modular.
+
+## 📂 Estructura del Proyecto
+Restaurante__app/
+├── main.py                    
+├── modelos/
+│   ├── init.py
+│   ├── producto.py            
+│   └── usuario.py             
+└── servicios/
+├── init.py
+└── restaurante.py
+         
+## 🗂️ Estructuras de Datos Utilizadas
+| Estructura | Uso en el sistema |
+|---|---|
+| *Lista* | Almacenar productos y usuarios registrados |
+| *Diccionario* | Búsqueda rápida de productos por código |
+| *Conjunto* | Evitar duplicados: códigos, IDs, categorías |
+| *Tupla* | Opciones fijas del menú (no modificables) |
+
+## ✅ Funcionalidades
 1. Registrar producto
 2. Buscar producto
 3. Actualizar producto
@@ -11,25 +35,6 @@
 8. Mostrar categorías
 9. Salir
 
-## 📂 Estructura del Proyecto
-restaurante_app/
-├── modelos/
-│   ├── init.py
-│   ├── producto.py
-│   └── usuario.py
-├── servicios/
-│   ├── init.py
-│   └── restaurante.py
-├── main.py
-└── README.md
-## 🧱 Estructuras de Datos Utilizadas
-| Estructura | Uso |
-|---|---|
-| *Lista* | Almacenar productos y usuarios (colecciones dinámicas) |
-| *Tupla* | Opciones del menú (información fija que no cambia) |
-| *Diccionario* | Búsqueda rápida de productos por código |
-| *Conjunto (Set)* | Obtener categorías únicas sin duplicados |
-
-## ▶️ Cómo ejecutar
+## 🚀 Ejecución
 ```bash
 python main.py
