@@ -1,9 +1,9 @@
 class Producto:
-    def __init__(self, codigo: str, nombre: str, categoria: str, precio: float):
+    def __init__(self, codigo: str, nombre: str, precio: float, categoria: str):
         self.codigo = codigo
         self.nombre = nombre
-        self.categoria = categoria
         self.precio = precio
+        self.categoria = categoria
 
     def __str__(self):
-        return f"[{self.codigo}] {self.nombre} | Categoría: {self.categoria} | Precio: ${self.precio:.2f}"
+        return f"Código: {self.codigo} | Nombre: {self.nombre} | Precio: ${self.precio:.2f} | Categoría: {self.categoria}"

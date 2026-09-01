@@ -1,9 +1,8 @@
 class Usuario:
-    def __init__(self, identificacion: str, nombre: str, correo: str):
-        self.identificacion = identificacion
+    def __init__(self, id_usuario: str, nombre: str, telefono: str):
+        self.id_usuario = id_usuario
         self.nombre = nombre
-        self.correo = correo
+        self.telefono = telefono
 
     def __str__(self):
-        return f"ID: {self.identificacion} | Nombre: {self.nombre} | Correo: {self.correo}"
-        
+        return f"ID: {self.id_usuario} | Nombre: {self.nombre} | Teléfono: {self.telefono}"
